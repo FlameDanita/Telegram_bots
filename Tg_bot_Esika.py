@@ -12,11 +12,33 @@ sticker_ids = {"Хитрая_Миён" : "CAACAgIAAxkBAAEFFjBisMOr40zNs3hZ57qW8y
 def start_bot():
     token = API.get_tg_TOKEN()
     bot = telebot.TeleBot(token, parse_mode=None) # You can set parse_mode by default. HTML or MARKDOWN
+    
+    bot.send_message(chat_ids['Danita'], emoji.emojize('Расчет завершен, дорогой друг :smirk::heartbeat:', language='alias'))
+    bot.send_sticker(chat_ids['Danita'], sticker_ids['Хитрая_Миён'])
+
     @bot.message_handler(commands=['start'])
     def send_welcome(message):
         bot.reply_to(message, "Привет, добро пожаловать!)\n" +
                             "Набери /help и узнаешь доступные команды <3")
 
+    @bot.message_handler(func=lambda m: True)
+    def echo_all(message):
+        bot.reply_to(message, "Не знаю таких команд, чел :/")
+
+    bot.infinity_polling()
+
+def calculate_complite_bot():
+    token = API.get_tg_TOKEN()
+    bot = telebot.TeleBot(token, parse_mode=None) # You can set parse_mode by default. HTML or MARKDOWN
+    
+    bot.send_message(chat_ids['Danita'], emoji.emojize('Расчет завершен, дорогой друг :smirk::heartbeat:', language='alias'))
+    bot.send_sticker(chat_ids['Danita'], sticker_ids['Хитрая_Миён'])
+
+    @bot.message_handler(commands=['off'])
+    def stop_command(message):
+        bot.reply_to(message, 'Выключаюсь...')
+        bot.stop_polling()
+    
     @bot.message_handler(func=lambda m: True)
     def echo_all(message):
         bot.reply_to(message, "Не знаю таких команд, чел :/")
@@ -42,9 +64,6 @@ def fobos_pc():
     @bot.message_handler(func=lambda m: True)
     def echo_all(message):
         bot.reply_to(message, "Не знаю таких команд :/")
-    
-    if flag:
-        bot.infinity_polling(interval=1)
 
 def fobos_laptop():
     flag = True
@@ -69,3 +88,5 @@ def fobos_laptop():
     if flag:
         bot.infinity_polling(interval=1)
     
+
+ 
